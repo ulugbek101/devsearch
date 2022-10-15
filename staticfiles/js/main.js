@@ -126,8 +126,7 @@ if (messageDeleteBtn) {
 
       }
     }
-    // TODO replace localhost
-    fetch("http://localhost:8000/api/remove-message/", {
+    fetch("https://devsearch-find-developers.herokuapp.com/api/remove-message/", {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
@@ -158,8 +157,7 @@ if (rates) {
       const redirectUrl = e.target.dataset.redirect;
       if (!profileID) window.location.replace(redirectUrl);
       else {
-        // TODO replace localhost
-        fetch('http://localhost:8000/api/vote/', {
+        fetch('https://devsearch-find-developers.herokuapp.com/api/vote/', {
           method: 'PUT',
           headers: {
             "Content-Type": "application/json",
@@ -172,7 +170,7 @@ if (rates) {
         })
           .then(response => response.json())
           .then(data => {
-            const {is_liked, likes, dislikes} = data;
+            const { is_liked, likes, dislikes } = data;
             if (is_liked) {
               document.querySelector('.like').classList.add('selected');
               document.querySelector('.dislike').classList.remove('selected');
