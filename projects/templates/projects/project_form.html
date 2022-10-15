@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    <main class="formPage my-xl">
+        <div class="content-box">
+            <div class="formWrapper">
+                <a class="backButton" href="{% url 'account' %}"><i class="im im-angle-left"></i></a>
+                <br>
+
+                <form class="form" method="POST" action="" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    {% for field in form %}
+                        <div class="form__field">
+                            <label for="id_{{ field.name }}">{{ field.label }}: </label>
+                            {{ field }}
+                        </div>
+                    {% endfor %}
+                    {% if not project_create %}
+                        <div class="form__field">
+                            <label for="id__newtags">Tags: </label>
+                            <div class="form__field" id="tags-container">
+                                {% for tag in project.tags.all %}
+                                    <div class="project-tag tag tag--pill tag--main" data-tag="{{ tag.id }}"
+                                         data-project="{{ project.id }}">{{ tag.name|upper }} &#215;
+                                    </div>
+                                {% endfor %}
+                            </div>
+                            <textarea id="id__newtags" onkeyup="addTag()" type="text" class="input input--text"
+                                      name="newtags" data-project="{{ project.id }}"></textarea>
+                        </div>
+                    {% endif %}
+                    <input class="btn btn--sub btn--lg  my-md" type="submit" value="Submit"/>
+                </form>
+            </div>
+        </div>
+    </main>
+
+{% endblock content %}

@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    <main class="formPage my-xl">
+        <div class="content-box">
+            <div class="formWrapper">
+                <a class="backButton" href="{% url 'account' %}"><i class="im im-angle-left"></i></a>
+                <br>
+
+                <form class="form" method="POST" action="" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    {% for field in form %}
+                        {% if field.name == 'image' %}
+                            {% if request.user.profile.image.url %}
+                                <p>Currently: <a target="_blank" style="font-size: 12px;" href="{{ request.user.profile.image.url }}">{{ request.user.profile.image.url }}</a></p>
+                                <div class="form__field">
+                                    <label for="id_image">Image: </label>
+                                    <input type="file" name="image" accept="image/*" class="input" id="id_image">
+                                </div>
+                            {% else %}
+                                <div class="form__field">
+                                    <label for="id_image">Image: </label>
+                                    <input type="file" name="image" accept="image/*" class="input" id="id_image">
+                                </div>
+                            {% endif %}
+                        {% else %}
+                            <div class="form__field">
+                                <label for="id_{{ field.name }}">{{ field.label }}: </label>
+                                {{ field }}
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                    <input class="btn btn--sub btn--lg  my-md" type="submit" value="Submit"/>
+                </form>
+            </div>
+        </div>
+    </main>
+
+{% endblock content %}

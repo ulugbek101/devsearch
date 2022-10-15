@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% block content %}
+<main class="inbox my-xl">
+    <div class="content-box">
+        {% if profile.messages.all %}
+        <h3 class="inbox__title">New Messages(<span>{{ unread_messages }}</span>)</h3>
+        <div class="message-content-wrapper">
+            <button class="delete-btn" disabled>
+                <i class="fa fa-trash-o"></i>
+                Delete
+            </button>
+            <ul class="messages">
+                {% for message in profile.messages.all %}
+                <li class="message {% if not message.is_read %} message--unread {% endif %}">
+                    <a href="{% url 'message' pk=message.id %}">
+                        <span class="message__author">
+                            {% if message.sender %}
+                            {{ message.sender.fullname }}
+                            {% else %}
+                            {% if not message.fullname %} Anonymous user
+                            {% else %} {{ message.fullname }} {% endif %}
+                            {% endif %}</span>
+                        <span class="message__subject">{{ message.subject|truncatechars:"50" }}</span>
+                        <span class="message__date">{{ message.created|date:"M j, Y, H:i" }}</span>
+                    </a>
+
+                    <label class="container-check">
+                        <input class="message-delete" type="checkbox" data-profile="{{ profile.id }}"
+                            data-message="{{ message.id }}">
+                        <span class="checkmark"></span>
+                    </label>
+
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+
+        {% else %}
+        <h5 style="display: flex; justify-content: center;">There is no new messages.</h5>
+        {% endif %}
+    </div>
+</main>
+{% endblock content %}

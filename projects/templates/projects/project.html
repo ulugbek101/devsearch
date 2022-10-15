@@ -1,0 +1,111 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<main class="singleProject my-md">
+    <div class="container">
+        <div class="layout">
+            <div class="column column--1of3">
+                <h3 class="singleProject__subtitle">Tools & Stacks</h3>
+                <div class="singleProject__toolStack">
+                    {% for tag in project.tags.all %}
+                    <span class="tag tag--pill tag--sub tag--lg">
+                        <small>{{ tag }}</small>
+                    </span>
+                    {% endfor %}
+                </div>
+                {% if project.source_link %}
+                <a class="singleProject__liveLink" href="{{ project.source_link }}" target="_blank"><i
+                        class="im im-external-link"></i>
+                    Source link
+                </a>
+                {% endif %}
+                {% if project.demo_link %}
+                <a class="singleProject__liveLink" href="{{ project.demo_link }}" target="_blank"><i
+                        class="im im-external-link"></i>
+                    Demo link
+                </a>
+                {% endif %}
+            </div>
+            <div class="column column--2of3">
+                <img class="singleProject__preview" src="{{ project.image.url }}" alt="portfolio thumbnail" />
+                <div class="like-dislike">
+                    <span>
+                        <span class="icon--font">
+                            {{ project.comments_count }}
+                        </span>
+                        <a href="#feedback">
+                            <i class="fa fa-comments-o" title="Comments" style="font-size:36px"></i>
+                        </a>
+                    </span>
+                    <span>
+                        <span class="icon--font likes">
+                            {{ likes }}
+                        </span>
+                        <i class="fa fa-thumbs-up like rate {% if vote == True %} selected {% endif %}" data-redirect="{% url 'login' %}?next={{ request.path }}"
+                            data-userid="{{ request.user.profile.id }}" data-value="like" title="Likes"
+                            data-projectid="{{ project.id }}" style="font-size:30px"></i>
+                    </span>
+                    <span>
+                        <span class="icon--font dislikes">
+                            {{ dislikes }}
+                        </span>
+                        <i class="fa fa-thumbs-up dislike rate {% if vote == False %} selected {% endif %}"
+                            data-redirect="{% url 'login' %}?next={{ request.path }}"
+                            data-userid="{{ request.user.profile.id }}" data-value="dislike" title="Dislikes"
+                            data-projectid="{{ project.id }}" style="font-size:30px">
+                        </i>
+                    </span>
+                </div>
+                <a href="{% url 'profile' pk=project.owner.id %}" class="singleProject__developer">
+                    {{ project.owner.fullname }}
+                </a>
+                <h2 class="singleProject__title">{{ project.title }}</h2>
+                <h3 class="singleProject__subtitle">About the Project</h3>
+                <div class="singleProject__info">
+                    {{ project.description|linebreaksbr }}
+                </div>
+
+                <div class="comments">
+                    <h3 class="singleProject__subtitle" id="feedback">Feedback</h3>
+                    {# <h5 class="project--rating">#}
+                        {# {{ project.vote_ratio }}% Postitive Feedback ({{ project.vote_total }}#}
+                        {# Vote{{ project.vote_total|pluralize:"s" }})#}
+                        {# </h5>#}
+                    {% if user.is_authenticated %}
+                    <form class="form" action="" method="POST">
+                        {% csrf_token %}
+                        <div class="form__field">
+                            <label for="formInput#textarea">Comments: </label>
+                            {{ form.text }}
+                        </div>
+                        <input class="btn btn--sub btn--lg" type="submit" value="Comments" />
+                    </form>
+                    {% else %}
+                    <a href="{% url 'login' %}?next={{ request.path }}">You have to sign in to leave a comment</a>
+                    {% endif %}
+                    <div class="commentList">
+                        {% for review in project.review_set.all %}
+                        <div class="comment">
+                            <a href="{% url 'profile' pk=review.owner.id %}">
+                                <img class="avatar avatar--md" src="{{ review.owner.image.url }}" alt="user" />
+                            </a>
+                            <div class="comment__details">
+                                <a href="{% url 'profile' pk=review.owner.id %}" class="comment__author">
+                                    {{ review.owner.fullname }}</a>
+                                <p class="comment__info">
+                                    {{ review.text|linebreaksbr }}
+                                </p>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+</main>
+
+
+{% endblock content %}
