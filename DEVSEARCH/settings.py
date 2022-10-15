@@ -17,7 +17,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-(2=rj_q$^+)7diga)(cre4q5+d#v6gf07!ujph&^6x5g717dw7'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'devsearch-find-developers.herokuapp.com', 'web-production-7d5e.up.railway.app']
 
@@ -121,12 +121,12 @@ WSGI_APPLICATION = 'DEVSEARCH.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
-}
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
+#     }
+# }
 
 # DATABASES = {
 #     'default': {
@@ -139,16 +139,16 @@ DATABASES = {
 #     }
 # }
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.postgresql',
-#         'NAME': env.str('DB_NAME'),
-#         'HOST': env.str('DB_HOST_NAME'),
-#         'USER': env.str('DB_USER'),
-#         'PASSWORD': env.str('DB_PASSWORD'),
-#         'PORT': env.str('DB_PORT'),
-#     }
-# }
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': env.str('DB_NAME'),
+        'HOST': env.str('DB_HOST_NAME'),
+        'USER': env.str('DB_USER'),
+        'PASSWORD': env.str('DB_PASSWORD'),
+        'PORT': env.str('DB_PORT'),
+    }
+}
 
 
 # Password validation
@@ -186,8 +186,10 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-EMAIL_HOST_USER = "ulugbek.programmer02@gmail.com"
-EMAIL_HOST_PASSWORD = "aprlshmvttlkkfpo"
+EMAIL_HOST_USER = env.str("EMAIL_HOST_USER")
+EMAIL_HOST_PASSWORD = env.str("EMAIL_HOST_PASSWORD")
+# EMAIL_HOST_USER = "ulugbek.programmer02@gmail.com"
+# EMAIL_HOST_PASSWORD = "aprlshmvttlkkfpo"
 
 
 # Static files (CSS, JavaScript, Images)
@@ -209,15 +211,15 @@ CKEDITOR_UPLOAD_PATH = "uploads/"
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-CLOUDINARY_STORAGE = {
-    "CLOUD_NAME": "dhtrn05k4",
-    "API_KEY": "362582231434899",
-    "API_SECRET": "fPjepJOvjNmHsDL1K0W2ELVzmpE",
-}
 # CLOUDINARY_STORAGE = {
-#     "CLOUD_NAME": env.str("CLOUD_NAME"),
-#     "API_KEY": env.str("API_KEY"),
-#     "API_SECRET": env.str("API_SECRET"),
+#     "CLOUD_NAME": "dhtrn05k4",
+#     "API_KEY": "362582231434899",
+#     "API_SECRET": "fPjepJOvjNmHsDL1K0W2ELVzmpE",
 # }
+CLOUDINARY_STORAGE = {
+    "CLOUD_NAME": env.str("CLOUD_NAME"),
+    "API_KEY": env.str("API_KEY"),
+    "API_SECRET": env.str("API_SECRET"),
+}
 
 DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
