@@ -42,7 +42,7 @@ class Profile(models.Model):
     # profile.id in project.vote_set.values_list('profile', flat=True)
     
     class Meta:
-        ordering = ('-created', 'fullname')
+        ordering = ('created', 'fullname')
 
 
 class Skill(models.Model):
