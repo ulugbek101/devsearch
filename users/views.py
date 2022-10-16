@@ -64,8 +64,8 @@ def user_logout(request):
 
 def user_profile(request, pk):
     profile = Profile.objects.get(id=pk)
-    dev_skills = Skill.objects.exclude(description="")
-    other_skills = Skill.objects.filter(description="")
+    dev_skills = profile.skill_set.exclude(description="")
+    other_skills = profile.skill_set.filter(description="")
 
     context = {
         'profile': profile,
