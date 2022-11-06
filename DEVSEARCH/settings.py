@@ -128,16 +128,7 @@ WSGI_APPLICATION = 'DEVSEARCH.wsgi.application'
 #     }
 # }
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.postgresql',
-#         'NAME': env.str('PGDATABASE'),
-#         'HOST': env.str('PGHOST'),
-#         'USER': env.str('PGUSER'),
-#         'PASSWORD': env.str('PGPASSWORD'),
-#         'PORT': env.str('PGPORT'),
-#     }
-# }
+
 
 DATABASES = {
     'default': {
@@ -188,8 +179,7 @@ EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = env.str("EMAIL_HOST_USER")
 EMAIL_HOST_PASSWORD = env.str("EMAIL_HOST_PASSWORD")
-# EMAIL_HOST_USER = "ulugbek.programmer02@gmail.com"
-# EMAIL_HOST_PASSWORD = "aprlshmvttlkkfpo"
+
 
 
 # Static files (CSS, JavaScript, Images)
@@ -211,11 +201,6 @@ CKEDITOR_UPLOAD_PATH = "uploads/"
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-# CLOUDINARY_STORAGE = {
-#     "CLOUD_NAME": "dhtrn05k4",
-#     "API_KEY": "362582231434899",
-#     "API_SECRET": "fPjepJOvjNmHsDL1K0W2ELVzmpE",
-# }
 CLOUDINARY_STORAGE = {
     "CLOUD_NAME": env.str("CLOUD_NAME"),
     "API_KEY": env.str("API_KEY"),
